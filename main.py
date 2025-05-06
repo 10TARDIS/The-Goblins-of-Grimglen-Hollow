@@ -489,7 +489,7 @@ def update_gold(num):
     gold = PLAYER_INVENTORY["gold"]
     gold = gold + num
     PLAYER_INVENTORY.update({"gold": gold})
-    write(f"You now have {PLAYER_INVENTORY["gold"]} gold.")
+    write(f"You now have {gold} gold.")
 
 # INPUT: None
 # RETURN: An int of the player's current gold value.
@@ -3621,11 +3621,11 @@ def act_2():
                         explain("It's trembling… scared, but willing to fight if it has to.")
                         rest()
 
-                        if not PLAYER_INVENTORY.get("food rations"):
+                        if PLAYER_INVENTORY.get("food rations"):
                             flag("has rations")
                         owlbear_encounter = dialogue("What do you do?", [
                             opt(f"Approach gently and try to calm it down. [{chance("wis", 12, "animal handling")} chance of success]", 1),
-                            once("has rations", opt("Offer it the food rations you bought from the merchant.", 2)),
+                            opt("Offer it the food rations you bought from the merchant.", 2, flag="has rations"),
                             opt(f"[Bard] Play it a comforting song. [{chance("cha", 12, "performance")}]", 3, classes="Bard"),
                             opt("Fight it off.", 4),
                             opt("Walk away before it attacks you.", 5)
@@ -3681,7 +3681,7 @@ def act_2():
 
                         # Feed the owlbear
                         if owlbear_encounter == 2:
-                            PLAYER_INVENTORY.pop("food rations")
+                            PLAYER_INVENTORY.pop("food rations", None)
                             explain("You crouch low and offer some food.")
                             rest()
                             explain("The owlbear watches you with intense, blinking eyes. Its muscles are still taut, but its growl softens into a questioning trill.")
@@ -4155,7 +4155,7 @@ def act_2():
                 if thats_a_bear == 1:
                     scare_the_bear = check("cha", 14, "intimidation")
                     if scare_the_bear:
-                        write("You passed the check!")
+                        check_success()
                         rest()
                         if PLAYER_CLASS == "Bard":
                             explain("You strum up an intimidating song on your lute.")
@@ -4209,7 +4209,7 @@ def act_2():
                 if thats_a_bear == 2:
                     sneak_around_bear = check("dex", 14, "stealth")
                     if sneak_around_bear:
-                        write("You passed the check!")
+                        check_success()
                         rest()
                         if not PLAYER_CLASS == "Wizard":
                             explain("You dash towards the trees before it sees you.")
