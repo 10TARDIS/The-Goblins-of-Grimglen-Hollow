@@ -3697,7 +3697,7 @@ def act_2():
 
                             while True:
                                 
-                                owlbear_name = input("What do you want to call the owlbear cub? ")
+                                owlbear_name = get_input("What do you want to call the owlbear cub?")
                                 if owlbear_name == "":
                                         write(f"The owlbear cub needs some sort of name, don't name it nothing.")
                                         rest()
@@ -3708,6 +3708,7 @@ def act_2():
                                     write(f"{owlbear_name} will now follow you and fight with you.")
                                     rest()
                                     break
+                            unlock("owlbear")
                             friend("owlbear cub", owlbear_name)
                             break                   
                             
@@ -3731,7 +3732,7 @@ def act_2():
                                 wait()
                                 while True:
                                     
-                                    owlbear_name = input("What do you want to call the owlbear cub? ")
+                                    owlbear_name = get_input("What do you want to call the owlbear cub? ")
                                     if owlbear_name == "":
                                             write(f"The owlbear cub needs some sort of name, don't name it nothing.")
                                             rest()
@@ -5101,9 +5102,9 @@ def main():
 
     # Main game functions:
     while True:
-        prologue()
+        # prologue()
 
-        act_1()
+        # act_1()
         act_2()
         act_3()
 
